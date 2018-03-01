@@ -54,10 +54,14 @@ body{
 .newSong.active{
     background: #d4d4d4;
 }
+
+#songList-container{
+    flex-grow: 1;  /*自动向两边延伸*/
+}
 .songList{
     text-align: left;  /*靠左对齐*/
     border-top:1px solid #999;
-    flex-grow: 1;  /*自动向两边延伸*/
+    /* flex-grow: 1;  自动向两边延伸 */
 }
 .songList > li{
     border-bottom: 1px solid #ddd;
