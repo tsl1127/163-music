@@ -30,14 +30,6 @@
     <!-- <audio  controls src="http://p4rceyn4i.bkt.clouddn.com/%E9%82%A3%E4%B8%AA%E4%BA%BA.mp3"></audio>   -->
     <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
     <script>    
-        var APP_ID = 'RLx1B3TOOpxjFBSYOwXFKjRU-gzGzoHsz';
-        var APP_KEY = '6VY655qCxVuaNxe8vVfs1xdR';
-
-        AV.init({
-            appId: APP_ID,
-            appKey: APP_KEY
-        });
-
         // //创建数据库
         //     var TestObject = AV.Object.extend('Playlist');
         //     //创建一条记录
@@ -53,11 +45,13 @@
         //         alert('LeanCloud Rocks!');
         //     })
     </script>
+    <script src="./js/initializers/av.js"></script>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../vendors/moxie.min.js"></script>
     <script src="../node_modules/plupload/js/plupload.min.js"></script>
     <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>
   
+    <script src="./js/event-hub.js"></script>
     <script src="./js/song-list.js"></script>
     <script src="./js/song-form.js"></script>
     <script src="./js/new-song.js"></script>
