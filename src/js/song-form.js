@@ -55,6 +55,16 @@
             url:'',
             id:''
         },
+        updata(data){
+            var song = AV.Object.createWithoutData('Song', this.data.id)
+            song.set('name',data.name)
+            song.set('singer',data.singer)
+            song.set('url',data.url)
+             return song.save().then((response)=>{
+                Object.assign(this.data,data)
+                return response
+             })
+        },
         create(data){
             // 声明类型
             var Song = AV.Object.extend('Song');
@@ -121,26 +131,48 @@
                 this.view.render(this.model.data)                
             })
         },
-        bindEvents(){
-            this.view.$el.on('submit','form',(e)=>{
-                e.preventDefault()
-                let needs=['name','singer','url'] //或者needs='name singer url'.split(' ')
-                let data={}
-                needs.map((string)=>{
-                    data[string]=this.view.$el.find(`[name="${string}"]`).val()
-                })
-                this.model.create(data)
-                .then(()=>{
+        create(){
+            let needs = ['name', 'singer', 'url'] //或者needs='name singer url'.split(' ')
+            let data = {}
+            needs.map((string) => {
+                data[string] = this.view.$el.find(`[name="${string}"]`).val()
+            })
+            this.model.create(data)
+                .then(() => {
                     // console.log(this.model.data)
                     this.view.reset()
                     //this.model.data ==='ADDR 108
                     //以下为深拷贝
                     let string = JSON.stringify(this.model.data)
-                    let object =JSON.parse(string)
-                    window.eventHub.emit('create',object)  //发布
+                    let object = JSON.parse(string)
+                    window.eventHub.emit('create', object)  //发布
                     //window.eventHub.emit('create',this.model.data)  //如果用上面的深拷贝代码，那么assign就
                     //可以继续用了
                 })
+        },
+        updata(){
+            let needs = ['name', 'singer', 'url'] //或者needs='name singer url'.split(' ')
+            let data = {}
+            needs.map((string) => {
+                data[string] = this.view.$el.find(`[name="${string}"]`).val()
+            }) 
+            this.model.updata(data)   
+            .then(()=>{
+                // alert('更新成功')
+                window.eventHub.emit('updata',JSON.parse(JSON.stringify(this.model.data)))//深拷贝
+            })      
+        },
+        bindEvents(){
+            this.view.$el.on('submit','form',(e)=>{
+                e.preventDefault()
+                if(this.model.data.id){
+                    this.updata()
+                }else{
+                    this.create()
+                }
+
+
+               
             })
         }
     }
