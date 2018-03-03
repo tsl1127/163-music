@@ -9,10 +9,13 @@
             let $el=$(this.el)
             $el.html(this.template)
 
-            let {songs}=data
+            let {songs,selectSongId}=data
             let liList = songs.map((song)=>{
                 let li=$('<li></li>')
                 li.text(song.name).attr('data-song-id',song.id)
+                if(song.id===selectSongId){
+                    li.addClass('active')
+                }
                 return li
             })
             $el.find('ul').empty()  //清空ul里的
@@ -20,17 +23,18 @@
                 $el.find('ul').append(domLi)
             })
         },
-        activeItem(li){
-            let $li = $(li)
-            $li.addClass('active').siblings('.active').removeClass('active')
-        },
+        // activeItem(li){
+        //     let $li = $(li)
+        //     $li.addClass('active').siblings('.active').removeClass('active')
+        // },
         clearActive(){
             $(this.el).find('.active').removeClass('active')
         }
     }
     let model={
         data:{
-            songs:[]    
+            songs:[]  ,
+            selectSongId:  undefined
         },
         find(){
             var query = new AV.Query('Song');
@@ -59,8 +63,12 @@
         },
         bindEvents(){
             $(this.view.el).on('click','li',(e)=>{
-                this.view.activeItem(e.currentTarget)
+                // this.view.activeItem(e.currentTarget)
                 let songId=e.currentTarget.getAttribute('data-song-id')
+
+                this.model.data.selectSongId = songId  //把选中的歌曲的id记录下来
+                this.view.render(this.model.data)
+
                 let data
                 let songs=this.model.data.songs
                 for(i=0;i<songs.length;i++){
