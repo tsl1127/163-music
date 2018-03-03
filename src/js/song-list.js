@@ -61,7 +61,20 @@
             $(this.view.el).on('click','li',(e)=>{
                 this.view.activeItem(e.currentTarget)
                 let songId=e.currentTarget.getAttribute('data-song-id')
-                window.eventHub.emit('select',{id:songId})
+                let data
+                let songs=this.model.data.songs
+                for(i=0;i<songs.length;i++){
+                    if(songs[i].id===songId){
+                        data=songs[i]     //从歌单中找到了选中的歌曲
+                        break
+                    }
+                }
+                // console.log('for 循环结束后的data')
+                // console.log(data)
+                //深拷贝
+                let string = JSON.stringify(data)
+                let object = JSON.parse(string)   //object就是新的内存
+                 window.eventHub.emit('select',object)
             })
         },
         bindEventHub(){
