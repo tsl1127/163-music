@@ -78,9 +78,9 @@
             })
         },
         bindEventHub(){
-            window.eventHub.on('upload',()=>{
-                this.view.clearActive()
-            })
+            // window.eventHub.on('upload',()=>{
+            //     this.view.clearActive()
+            // })
             window.eventHub.on('create',(songData)=>{   //订阅
                 // console.log(songData)
                 // console.log(JSON.stringify(this.model.data))
