@@ -164,6 +164,7 @@ body{
     height: 100%;
     background:rgba(0,0,0,0.2);
     z-index: 1;
+    pointer-events: none;   /*在上传过程中不影响用户鼠标点击*/
 }
 
 .site-loading.active{

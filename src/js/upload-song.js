@@ -1,3 +1,4 @@
+
 {
     let view={
         el:'.uploadArea',
@@ -5,7 +6,11 @@
             return $(this.el).find(selector)[0] //返回的jquery对象的第0个DOM给出来
         }
     }
-    let model={}
+    let model={
+        data:{
+            status:'open'
+        }
+    }
     let controller={
         init(view,model){
             this.view=view
@@ -59,17 +64,24 @@
                             // 文件添加进队列后,处理相关的事情
                         });
                     },
-                    'BeforeUpload': function(up, file) {
+                    'BeforeUpload': (up, file)=> {
                            // 每个文件上传前,处理相关的事情
                            window.eventHub.emit('beforeUpload')
-                        //    console.log('上传前')
+                        //    console.log('上传前')                       
+                        if(this.model.data.status==='closed'){
+                            return false   //阻止上传
+                        }else{
+                            this.model.data.status='closed'
+                            return true
+                        }
+                        
                     },
                     'UploadProgress': function(up, file) {
                            // 每个文件上传时,处理相关的事情
                         //    uploadStatus.textContent='上传中'
                     },
                     //文件上传成功之后调用FileUploaded
-                    'FileUploaded': function(up, file, info) {
+                    'FileUploaded': (up, file, info)=>{
                            // 每个文件上传成功后,处理相关的事情
                            // 其中 info.response 是文件上传成功后，服务端返回的json，形式如
                            // {
@@ -79,6 +91,7 @@
                            // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
                             window.eventHub.emit('afterUpload')
                             // console.log('上传后')
+                            this.model.data.status='open'
 
                            var domain = up.getOption('domain');
                            // var res = parseJSON(info.response);
