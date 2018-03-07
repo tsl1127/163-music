@@ -99,6 +99,8 @@ body{
     display: table;
   }
   
+  section.playlists{
+  }
   section.playlists > ol.songs{
     display: flex;
     flex-wrap: wrap;
@@ -121,6 +123,7 @@ body{
   section.playlists > ol.songs > li img{
     width: 100%;
   }
+  section.songs{}
   section.songs > .list {
     margin-top: 18px;
   }
@@ -152,6 +155,7 @@ body{
   }
   section.songs > .list .icon-sq{
     fill: #FE672E;
+    
   }
   section.art{
     padding-top: 38px;
