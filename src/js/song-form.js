@@ -26,13 +26,19 @@
                             <input name="url" type="text" value="__url__">
                                       
                 </div>
+                <div class="row">
+                <label>
+                        封面</label> 
+                        <input name="cover" type="text" value="__cover__">
+                                  
+            </div>
             <div class="row actions">
                 <button type="submit">保存</button>
             </div>
         </form>
         `,
         render(data ={}){
-            let placeholders = ['name','url','singer','id']
+            let placeholders = ['name','url','singer','id','cover']
             let html=this.template
             placeholders.map((string)=>{
                 html=html.replace(`__${string}__`,data[string]||'')  //兼容
@@ -53,13 +59,15 @@
             name:'',
             singer:'',
             url:'',
-            id:''
+            id:'',
+            cover:''
         },
         updata(data){
             var song = AV.Object.createWithoutData('Song', this.data.id)
             song.set('name',data.name)
             song.set('singer',data.singer)
             song.set('url',data.url)
+            song.set('cover',data.cover)
              return song.save().then((response)=>{
                 Object.assign(this.data,data)
                 return response
@@ -74,6 +82,7 @@
             song.set('name', data.name);
             song.set('singer', data.singer);
             song.set('url', data.url);
+            song.set('cover', data.cover);
              return song.save().then( (newSong)=>{
                 // console.log(newSong)
                 // let id=newSong.id
@@ -122,7 +131,7 @@
                 // }
                 if(this.model.data.id){
                     this.model.data={
-                        name:'',url:'',id:'',singer:''
+                        name:'',url:'',id:'',singer:'',cover:''
                     }
                 }else{
                     Object.assign(this.model.data,data)
@@ -132,7 +141,7 @@
             })
         },
         create(){
-            let needs = ['name', 'singer', 'url'] //或者needs='name singer url'.split(' ')
+            let needs = ['name', 'singer', 'url','cover'] //或者needs='name singer url'.split(' ')
             let data = {}
             needs.map((string) => {
                 data[string] = this.view.$el.find(`[name="${string}"]`).val()
@@ -151,7 +160,7 @@
                 })
         },
         updata(){
-            let needs = ['name', 'singer', 'url'] //或者needs='name singer url'.split(' ')
+            let needs = ['name', 'singer', 'url','cover'] //或者needs='name singer url'.split(' ')
             let data = {}
             needs.map((string) => {
                 data[string] = this.view.$el.find(`[name="${string}"]`).val()

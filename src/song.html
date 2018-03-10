@@ -4,10 +4,42 @@
   <meta charset="UTF-8">
   <title>歌曲播放页面</title>
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="./css/song.css">
 </head>
 <body>
-    歌曲播放页面
-    <div id="app"></div>
+    <div class="page" id="app">
+        <audio src="#"></audio>   
+        <div class="container">
+            <img class="pointer" src="./img/needle.png" alt="">
+            <div class="disc">
+                <div class="icon-wrapper">
+                    <svg class="icon icon-play">
+                        <use xlink:href="#icon-play"></use>
+                    </svg>
+                    <svg class="icon icon-pause">
+                            <use xlink:href="#icon-pause"></use>
+                    </svg>
+                </div>
+                <img class="ring"    src="./img/disc.png" alt="">
+                <img class="light"   src="./img/disc_light.png" alt="">
+                <img class="cover"   src="./img/20180310162751.jpg" alt="">
+            </div>
+        </div>
+        <div class="song-description">
+            <h1>空空如也</h1>
+            <div class="lyric">
+                <div class="lines">
+
+                </div>
+            </div>
+        </div>
+        <div class="links">
+            <a href="#">打开</a>
+            <a href="#" class="main">下载</a>
+        </div>
+
+    </div>  
+    <script src="//at.alicdn.com/t/font_9dyko39vtiifi529.js"></script>
   <script src="//at.alicdn.com/t/font_395875_4hwrep7mypx8ncdi.js"></script>
   <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
   <script src="./js/initializers/av.js"></script>

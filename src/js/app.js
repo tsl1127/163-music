@@ -1,36 +1,38 @@
 {
     let view = {
         el:'#app',
-        template:`
-            <audio src={{url}}>
-            
-            </audio>
-            <div>
-                <button class="play">播放</button>
-                <button class="pause">暂停</button>
-            </div>
-        `,
         render(data){
-            this.$el.html(this.template.replace('{{url}}',data.url))
-        },
-        init(){
-            this.$el = $(this.el)
+            let {song,status} = data
+            $(this.el).find('img.cover').attr('src',song.cover)  //改src
+            if($(this.el).find('audio').attr('src')!==song.url){  //为了歌曲播放暂停后可以继续播放而不是重新播放
+                $(this.el).find('audio').attr('src',song.url)
+            }            
+            if(status === 'playing'){
+                $(this.el).find('.container').addClass('playing')
+            }else{
+                $(this.el).find('.container').removeClass('playing')
+            }
         },
         play(){
-            let audio = this.$el.find('audio')[0]  //dom元素
-            audio.play()  //API
+            // console.log($(this.el).find('audio'))
+            $(this.el).find('audio')[0].play()
+            
         },
         pause(){
-            let audio = this.$el.find('audio')[0]  //dom元素
-            audio.pause()  //API
+            $(this.el).find('audio')[0].pause()
         }
+
     }
     let model = {
         data:{
-            id:'',
-            name:'',
-            singer:'',
-            url:''
+            song :{
+                id:'',
+                name:'',
+                singer:'',
+                url:'',
+                cover:''
+            },
+            status:'paused'  //2个状态
         },
         // setId(id){
         //     this.data.id = id
@@ -39,7 +41,8 @@
             var query = new AV.Query('Song');
             return query.get(id).then((song)=>{
                 // console.log(song)
-                Object.assign(this.data,{id:song.id,...song.attributes})
+                // console.log(2)
+                Object.assign(this.data.song,{id:song.id,...song.attributes})
                 return song
                 // return {
                 //     id:song.id,
@@ -54,24 +57,29 @@
     let controller = {
         init(view,model){
             this.view = view
-            this.view.init()
             this.model = model
             let id = this.getSongId()
             // this.model.setId(id)
             this.model.get(id).then(()=>{
             //    console.log (this.model.data)
             this.view.render(this.model.data)
-            
             })
             this.bindEvents()
         },
         bindEvents(){
-            $(this.view.el).on('click','.play',()=>{
+            $(this.view.el).on('click','.icon-play',()=>{
+                this.model.data.status = 'playing'
+                this.view.render(this.model.data)
                 this.view.play()
+                
             })
-            $(this.view.el).on('click','.pause',()=>{
+            $(this.view.el).on('click','.icon-pause',()=>{
+                this.model.data.status = 'paused'
+                this.view.render(this.model.data)
                 this.view.pause()
+                
             })
+
         },
         getSongId(){
             // console.log(window.location.search)  返回结果带有?，我们不想要?
