@@ -128,7 +128,7 @@
 }
 
 .song-description p.active{
-    color: white;
+    color: red;
 }
 
 .page > .links{
