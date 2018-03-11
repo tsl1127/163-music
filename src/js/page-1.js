@@ -39,6 +39,9 @@
             script1.onload=function(){
                 // console.log('模块1加载完毕')
             }
+            // script1.onerror = function(){
+            //     alert('加载模块1错误')
+            // }
             document.body.appendChild(script1)
         },
         loadModule2(){
@@ -47,6 +50,9 @@
             script2.onload=function(){
                 // console.log('模块2加载完毕')
             }
+            // script2.onerror = function(){
+            //     alert('加载模块2错误')
+            // }
             document.body.appendChild(script2)  
         }   
 
