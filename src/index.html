@@ -99,6 +99,28 @@
       alert(row)
     }
   </script> -->
+  <!-- <div id="consoleOutput" style="position :fixed;width:100%;left:0;bottom:0;height:100px;border:1px solid 
+    black;background:blue;overflow:auto; ">
+  </div>
+  <script>
+    window.console ={
+      log(x){
+        let p = document.createElement('p')
+        p.innerText = x
+        consoleOutput.appendChild(p)
+      }
+    }
+    console.log('nihao')
+    window.onerror = (message,file,row)=>{
+      console.log(message)
+      console.log(file)
+      console.log(row)
+    }
+  </script> -->
+  <script src="../vendors/vconsole.min.js"></script>
+  <script>
+      var vConsole = new VConsole();
+  </script>
   <script src="//at.alicdn.com/t/font_395875_4hwrep7mypx8ncdi.js"></script>
   <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
   <script src="./js/initializers/av.js"></script>
